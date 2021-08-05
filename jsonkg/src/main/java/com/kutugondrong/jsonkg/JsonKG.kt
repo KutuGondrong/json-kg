@@ -2,6 +2,7 @@ package com.kutugondrong.jsonkg
 
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.*
 import java.lang.reflect.ParameterizedType
 import kotlin.reflect.KClass
 import kotlin.reflect.KVisibility
@@ -20,6 +21,22 @@ class JsonKG {
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> fromJson(json: String, classOf: KClass<*>, isArray: Boolean = false): T {
         return fromJsonMainFunction(json, classOf, isArray)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Any> fromJson(jsonStream: InputStream, classOf: KClass<*>, isArray: Boolean = false): T {
+        val writer: Writer = StringWriter()
+        val buffer = CharArray(1024)
+        jsonStream.use { value ->
+            val reader: Reader = BufferedReader(InputStreamReader(value, "UTF-8"))
+            var n: Int
+            while (reader.read(buffer).also { n = it } != -1) {
+                writer.write(buffer, 0, n)
+            }
+        }
+
+        val jsonString: String = writer.toString()
+        return fromJsonMainFunction(jsonString, classOf, isArray)
     }
 
     /**
