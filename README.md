@@ -31,4 +31,4 @@ Step 2. Add the dependency
 Provide simple toJson() and fromJson() methods to convert objects to JSON
 
 ## Website
-[kutugondrong.com](https://kutugondrong.com/)
+[https://blog.istimewaa.com/](https://blog.istimewaa.com/)
